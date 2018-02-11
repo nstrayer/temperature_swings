@@ -2,3 +2,54 @@
 Initialized empty Git repository in /home/nick/fast_bind/weather_history/.git/
 ]0;/home/nick/fast_bind/weather_history]0;nick@compooper: ~/fast_bind/weather_history[01;32mnick@compooper[00m:[01;34m~/fast_bind/weather_history[00m$ git remote add origin git@github.com:nstra yer/temperature_swings.git
 ]0;/home/nick/fast_bind/weather_history]0;nick@compooper: ~/fast_bind/weather_history[01;32mnick@compooper[00m:[01;34m~/fast_bind/weather_history[00m$ lgit "prelimiary work"
+[master (root-commit) 9054656] prelimiary work
+ 39 files changed, 81417 insertions(+)
+ create mode 100644 .Rproj.user/4CADD3E8/console06/85731072
+ create mode 100644 .Rproj.user/4CADD3E8/console06/85731072.env
+ create mode 100644 .Rproj.user/4CADD3E8/console06/INDEX001
+ create mode 100644 .Rproj.user/4CADD3E8/pcs/files-pane.pper
+ create mode 100644 .Rproj.user/4CADD3E8/pcs/source-pane.pper
+ create mode 100644 .Rproj.user/4CADD3E8/pcs/windowlayoutstate.pper
+ create mode 100644 .Rproj.user/4CADD3E8/pcs/workbench-pane.pper
+ create mode 100644 .Rproj.user/4CADD3E8/persistent-state
+ create mode 100644 .Rproj.user/4CADD3E8/saved_source_markers
+ create mode 100644 .Rproj.user/4CADD3E8/sources/prop/A3F78826
+ create mode 100644 .Rproj.user/4CADD3E8/sources/prop/C9D50267
+ create mode 100644 .Rproj.user/4CADD3E8/sources/prop/INDEX
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/2E3D61AE-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/34870A60-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/3D9DAC67-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/3DC94B6A-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/4BC2A28-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/572D45DD-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/6367C8D5-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/65A94D5A-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/8935BA18
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/8935BA18-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/9986B0D5-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/9FA541C4
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/9FA541C4-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/C0F68A8E
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/C0F68A8E-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/D3FA1FD9-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/D9834EF1-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/EC89B544-contents
+ create mode 100644 .Rproj.user/4CADD3E8/sources/s-9bb37601/lock_file
+ create mode 100644 .Rproj.user/shared/notebooks/patch-chunk-names
+ create mode 100644 .Rproj.user/shared/notebooks/paths
+ create mode 100644 allstations.txt
+ create mode 100644 average_temp_max_by_season.csv
+ create mode 100644 get_average_by_zip.R
+ create mode 100644 parse_temps.R
+ create mode 100644 us_postal_codes.csv
+ create mode 100644 weather_history.Rproj
+Counting objects: 36, done.
+Delta compression using up to 8 threads.
+Compressing objects:   3% (1/31)   Compressing objects:   6% (2/31)   Compressing objects:   9% (3/31)   Compressing objects:  12% (4/31)   Compressing objects:  16% (5/31)   Compressing objects:  19% (6/31)   Compressing objects:  22% (7/31)   Compressing objects:  25% (8/31)   Compressing objects:  29% (9/31)   Compressing objects:  32% (10/31)   Compressing objects:  35% (11/31)   Compressing objects:  38% (12/31)   Compressing objects:  41% (13/31)   Compressing objects:  45% (14/31)   Compressing objects:  48% (15/31)   Compressing objects:  51% (16/31)   Compressing objects:  54% (17/31)   Compressing objects:  58% (18/31)   Compressing objects:  61% (19/31)   Compressing objects:  64% (20/31)   Compressing objects:  67% (21/31)   Compressing objects:  70% (22/31)   Compressing objects:  74% (23/31)   Compressing objects:  77% (24/31)   Compressing objects:  80% (25/31)   Compressing objects:  83% (26/31)   Compressing objects:  87% (27/31)   Compressing objects:  90% (28/31)   Compressing objects:  93% (29/31)   Compressing objects:  96% (30/31)   Compressing objects: 100% (31/31)   Compressing objects: 100% (31/31), done.
+Writing objects:   2% (1/36)   Writing objects:   5% (2/36)   Writing objects:   8% (3/36)   Writing objects:  11% (4/36)   Writing objects:  13% (5/36)   Writing objects:  16% (6/36)   Writing objects:  19% (7/36)   Writing objects:  22% (8/36)   Writing objects:  25% (9/36)   Writing objects:  27% (10/36)   Writing objects:  30% (11/36)   Writing objects:  33% (12/36)   Writing objects:  36% (13/36)   Writing objects:  38% (14/36)   Writing objects:  41% (15/36)   Writing objects:  44% (16/36)   Writing objects:  47% (17/36)   Writing objects:  50% (18/36)   Writing objects:  52% (19/36)   Writing objects:  55% (20/36)   Writing objects:  58% (21/36)   Writing objects:  61% (22/36)   Writing objects:  66% (24/36)   Writing objects:  69% (25/36)   Writing objects:  72% (26/36)   Writing objects:  75% (27/36)   Writing objects:  77% (28/36)   Writing objects:  80% (29/36)   Writing objects:  83% (30/36)   Writing objects:  86% (31/36)   Writing objects:  88% (32/36)   Writing objects:  91% (33/36)   Writing objects:  94% (34/36)   Writing objects:  97% (35/36)   Writing objects: 100% (36/36)   Writing objects: 100% (36/36), 973.60 KiB | 0 bytes/s, done.
+Total 36 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas:   0% (0/3)   [Kremote: Resolving deltas:  66% (2/3)   [Kremote: Resolving deltas: 100% (3/3)   [Kremote: Resolving deltas: 100% (3/3), done.[K
+To git@github.com:nstrayer/temperature_swings.git
+ * [new branch]      master -> master
+]0;/home/nick/fast_bind/weather_history]0;nick@compooper: ~/fast_bind/weather_history[01;32mnick@compooper[00m:[01;34m~/fast_bind/weather_history[00m$ lgit 'added swing by station data with la  [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kt[Kat s and lons"[K'

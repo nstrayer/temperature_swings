@@ -1,0 +1,9 @@
+{
+    "path" : "~/fast_bind/weather_history",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

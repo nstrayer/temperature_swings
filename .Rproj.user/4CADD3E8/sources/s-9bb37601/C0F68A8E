@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518299033304.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "C0F68A8E",
+    "lastKnownWriteTime" : 1518305814,
+    "last_content_update" : 1518305814938,
+    "path" : "~/fast_bind/weather_history/get_average_by_zip.R",
+    "project_path" : "get_average_by_zip.R",
+    "properties" : {
+        "cursorPosition" : "17,16",
+        "scrollLine" : "19",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

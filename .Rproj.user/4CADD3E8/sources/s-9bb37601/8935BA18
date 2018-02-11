@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1518300573973.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1099399894",
+    "id" : "8935BA18",
+    "lastKnownWriteTime" : 1518359097,
+    "last_content_update" : 1518359097544,
+    "path" : "~/fast_bind/weather_history/parse_temps.R",
+    "project_path" : "parse_temps.R",
+    "properties" : {
+        "cursorPosition" : "87,19",
+        "scrollLine" : "75",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

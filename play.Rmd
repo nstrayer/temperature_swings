@@ -1,0 +1,138 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(gstat)
+library(sp)
+library(maptools)
+library(rgdal)
+```
+
+
+```{r}
+extract_temps_by_period <- function(period){
+  paste0(
+    "https://www1.ncdc.noaa.gov/pub/data/normals/1981-2010/products/temperature/",
+    period, 
+    "-tmax-normal.txt") %>% 
+  read_table(col_names = F) %>% 
+  mutate(
+  quality = str_extract(X2, '[A-Z]'),
+  temp = as.numeric(str_replace(X2, '[A-Z]', '')),
+  period = period
+  ) %>% 
+  select(station_id = X1, quality, temp, period)
+}
+
+```
+
+```{r}
+periods <- c('djf', 'mam', 'jja', 'son')
+
+average_max_by_period <- periods %>% 
+  map_df(extract_temps_by_period)
+```
+
+```{r}
+column_names <- c('ID',           
+'LATITUDE',     
+'LONGITUDE',    
+'ELEVATION',    
+'STATE',        
+'NAME',         
+'GSNFLAG',      
+'HCNFLAG',      
+'WMOID',        
+'METHOD')
+
+station_info <- read_table('allstations.txt', col_names = column_names) %>% 
+  select(station_id = ID, lat = LATITUDE, lon = LONGITUDE, state = STATE)
+```
+
+```{r}
+# for each station find the temp delta between the largest and smallest average temp
+swing_by_station <- average_max_by_period %>% 
+  group_by(station_id) %>% 
+  summarise(swing = max(temp) - min(temp)) %>% 
+  right_join(station_info, by = 'station_id') %>% 
+  filter(!(is.na(swing) | is.na(lat))) %>% 
+  filter(lon < -60 & lon > -130 & lat > 20) %>% 
+  group_by(lat, lon) %>% 
+  summarise(swing = mean(swing))
+```
+
+```{r}
+ggplot(swing_by_station, aes(x = lon, y = lat, color = swing)) +
+  geom_point(size = 5, alpha = 0.1) +
+  borders('state') +
+  scale_colour_distiller(palette = 8, direction = 1) 
+```
+
+
+
+```{r}
+v <- swing_by_station %>% 
+  dplyr::select(lon,lat) %>% 
+  as.matrix() %>% 
+  dismo::voronoi()
+
+## Loading required namespace: deldir
+plot(v)
+```
+
+
+```{r}
+spatial <- swing_by_station %>% 
+  rename(x = lon, y = lat)
+
+sp::coordinates(spatial) = ~x + y
+```
+
+
+```{r}
+us <- rgdal::readOGR("us_shapefile/", "cb_2016_us_state_500k") 
+
+stations <- spatial %>% 
+  SpatialPoints(proj4string = sp::CRS(proj4string(us)))
+
+grid_us <- makegrid(us, n = 1000000) %>% 
+  SpatialPoints(proj4string = sp::CRS(proj4string(us))) %>% 
+  .[us,] 
+```
+
+```{r}
+proj4string(spatial) <- CRS(proj4string(us)) 
+```
+
+
+```{r}
+idw_model <- gstat::idw(
+  formula = swing ~ 1, 
+  locations = spatial, 
+  newdata = grid_us,
+  idp = 2)  # apply idw model for the data
+```
+```{r}
+krige_model <- gstat::krige(
+  formula = swing ~ 1, 
+  locations = spatial, 
+  newdata = grid_us) 
+```
+
+```{r}
+interpolated_results = as.data.frame(krige_model)  # output is defined as a data table
+names(interpolated_results)[1:3] <- c("long", "lat", "swing.pred")  # give names to the modelled variables
+```
+
+```{r}
+ggplot(interpolated_results) + 
+  geom_raster( aes(x = long, y = lat, fill = round(swing.pred/10))) +
+  scale_fill_gradient(low = "cyan", high = "orange") +
+  xlim(-125, -65) + ylim(24, 51) + 
+  theme_void() +
+  borders('state', alpha = 0.2, size = 0.1)
+```
+

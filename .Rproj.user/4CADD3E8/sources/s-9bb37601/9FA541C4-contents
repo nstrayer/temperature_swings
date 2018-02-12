@@ -3,10 +3,16 @@ title: "R Notebook"
 output: html_notebook
 ---
 
+```{r}
+library(tidyverse)
+library(gstat)
+library(sp)
+library(maptools)
+library(rgdal)
+```
 
 
 ```{r}
-library(tidyverse)
 extract_temps_by_period <- function(period){
   paste0(
     "https://www1.ncdc.noaa.gov/pub/data/normals/1981-2010/products/temperature/",
@@ -24,7 +30,6 @@ extract_temps_by_period <- function(period){
 ```
 
 ```{r}
-
 periods <- c('djf', 'mam', 'jja', 'son')
 
 average_max_by_period <- periods %>% 
@@ -46,6 +51,7 @@ column_names <- c('ID',
 station_info <- read_table('allstations.txt', col_names = column_names) %>% 
   select(station_id = ID, lat = LATITUDE, lon = LONGITUDE, state = STATE)
 ```
+
 ```{r}
 # for each station find the temp delta between the largest and smallest average temp
 swing_by_station <- average_max_by_period %>% 
@@ -66,50 +72,67 @@ ggplot(swing_by_station, aes(x = lon, y = lat, color = swing)) +
 ```
 
 
-```{r}
-grid_dim <- 150
-
-gridded <- swing_by_station %$%
-  akima::interp(
-    x = lon, y = lat, z = swing, 
-    nx = grid_dim, ny = grid_dim) 
-```
 
 ```{r}
-interpolated <- gridded$z %>% 
-  as_data_frame() %>% {
-    colnames(.) <- gridded$x
-    .
-  } %>% 
-  gather(lon, swing) %>% 
-  mutate(
-    lat = rep(gridded$y, times = grid_dim),
-    lon = as.numeric(lon)
-  ) %>% 
-  filter(!is.na(swing))
-```
-
-
-```{r}
-ggplot(interpolated, aes(x = lon, y = lat, color = swing)) +
-  scale_colour_distiller(palette = 8, direction = 1) +
-  geom_point() +
-  borders("state") 
-```
-
-
-```{r}
-install.packages('dismo')
-library(dismo)
-
-
 v <- swing_by_station %>% 
   dplyr::select(lon,lat) %>% 
   as.matrix() %>% 
-  voronoi()
+  dismo::voronoi()
 
 ## Loading required namespace: deldir
 plot(v)
+```
 
+
+```{r}
+spatial <- swing_by_station %>% 
+  rename(x = lon, y = lat)
+
+sp::coordinates(spatial) = ~x + y
+```
+
+
+```{r}
+us <- rgdal::readOGR("us_shapefile/", "cb_2016_us_state_500k") 
+
+stations <- spatial %>% 
+  SpatialPoints(proj4string = sp::CRS(proj4string(us)))
+
+grid_us <- makegrid(us, n = 1000000) %>% 
+  SpatialPoints(proj4string = sp::CRS(proj4string(us))) %>% 
+  .[us,] 
+```
+
+```{r}
+proj4string(spatial) <- CRS(proj4string(us)) 
+```
+
+
+```{r}
+idw_model <- gstat::idw(
+  formula = swing ~ 1, 
+  locations = spatial, 
+  newdata = grid_us,
+  idp = 2)  # apply idw model for the data
+```
+```{r}
+krige_model <- gstat::krige(
+  formula = swing ~ 1, 
+  locations = spatial, 
+  newdata = grid_us) 
+```
+
+```{r}
+interpolated_results = as.data.frame(krige_model)  # output is defined as a data table
+names(interpolated_results)[1:3] <- c("long", "lat", "swing.pred")  # give names to the modelled variables
+```
+
+```{r}
+ggplot(interpolated_results) + 
+  geom_raster( aes(x = long, y = lat, fill = round(swing.pred/10))) +
+  scale_fill_gradient(low = "cyan", high = "orange") +
+  xlim(-125, -65) + ylim(24, 51) + 
+  theme_void() +
+  borders('state', alpha = 0.2, size = 0.1)
 ```
 

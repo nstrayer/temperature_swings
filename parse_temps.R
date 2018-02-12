@@ -49,6 +49,7 @@ swing_by_station <- average_max_by_period %>%
   group_by(lat, lon) %>% 
   summarise(swing = mean(swing))
   
+write_csv(swing_by_station, 'swing_by_station.csv')
 
 ggplot(swing_by_station, aes(x = lon, y = lat, color = swing)) +
   geom_point(size = 5, alpha = 0.1) +
@@ -69,6 +70,9 @@ gridded <- swing_by_station %$%
   interp(
     x = lon, y = lat, z = swing, 
     nx = grid_dim, ny = grid_dim) 
+
+contourplot(z ~ x+y, data=gridded)
+
 
 interpolated <- gridded$z %>% 
   as_data_frame() %>% {
